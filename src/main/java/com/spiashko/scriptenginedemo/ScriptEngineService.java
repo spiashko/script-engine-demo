@@ -13,7 +13,7 @@ public class ScriptEngineService {
 
     private final ScriptEngine engine;
 
-    public void eval(String script, Object object) throws ScriptException {
+    public void eval(String script, ScriptObject object) throws ScriptException {
 
         Bindings bindings = engine.createBindings();
         bindings.put("log", log);
