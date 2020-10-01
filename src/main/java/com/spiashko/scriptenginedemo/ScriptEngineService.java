@@ -2,6 +2,7 @@ package com.spiashko.scriptenginedemo;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
 
 import javax.script.Bindings;
 import javax.script.ScriptEngine;
@@ -11,15 +12,18 @@ import javax.script.ScriptException;
 @RequiredArgsConstructor
 public class ScriptEngineService {
 
+    private static final Logger scriptLog = org.slf4j.LoggerFactory.getLogger("ScriptLogger");
+
     private final ScriptEngine engine;
 
     public void eval(String script, ScriptObject object) throws ScriptException {
 
         Bindings bindings = engine.createBindings();
-        bindings.put("log", log);
+        bindings.put("log", scriptLog);
         bindings.put("scriptObject", object);
 
-        engine.eval(script, bindings);
+        ScriptResult result = (ScriptResult) engine.eval(script, bindings);
+        log.info("script eval result: " + result);
     }
 
 }
